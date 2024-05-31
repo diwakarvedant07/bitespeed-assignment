@@ -95,13 +95,12 @@ router.post('/', async (req: Request, res: Response)=>{
         }
         else{
             const output = await findSimilar(email, phoneNumber);
-            
-            handleMiscellaneous(output)
+            var primaryId = await handleMiscellaneousMerging(output)
             // creating summary
             output.forEach((obj)=>{
 
                 if(obj.linkPrecedence.toLowerCase() == 'primary' ){
-                    result.contact.primaryContactId = obj.id
+                    result.contact.primaryContactId = primaryId
                     if(!result.contact.emails.includes(obj.email)){
                         result.contact.emails.push(obj.email)
                     }
@@ -148,7 +147,7 @@ router.post('/', async (req: Request, res: Response)=>{
 })
 
 // data is output of findSimilar
-async function handleMiscellaneous(data: Contact[]){
+async function handleMiscellaneousMerging(data: Contact[]){
     const primaryObjects: Contact[] = data.filter((obj: Contact)=>obj.linkPrecedence.toLowerCase() == 'primary')
     if(primaryObjects.length > 1){
         var oldestObject: Contact = primaryObjects[0];
@@ -171,7 +170,9 @@ async function handleMiscellaneous(data: Contact[]){
             newestObjectTree[i].linkedId = oldestObject.id
             await updateContact(newestObjectTree[i])
         }
+        return oldestObject.id
     }
+    return primaryObjects[0]?.id
 }
 
 

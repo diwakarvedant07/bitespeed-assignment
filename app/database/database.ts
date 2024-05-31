@@ -126,12 +126,19 @@ export function findSimilar(email: string, phoneNumber: string): Promise<Contact
     return new Promise(async (resolve,reject)=>{
         var output: Contact[] = []
         const result: any = await findByUserInfo(email, phoneNumber);
+        
         var primaryObjects: any =[]
-        result.forEach((obj: Contact)=>{
-            if(!primaryObjects.includes(obj.linkedId)){
-                primaryObjects.push(obj.linkedId)
+
+        for(let i=0; i< result.length; i++){
+            if(!primaryObjects.includes(result[i].linkedId)){
+                primaryObjects.push(result[i].linkedId)
             }
-        })
+            if(result[i].linkPrecedence.toLowerCase() == 'primary'){
+                if(!primaryObjects.includes(result[i].id)){
+                    primaryObjects.push(result[i].id)
+                }
+            }
+        }
 
         //var primaryObjects = result.filter((obj: Contact)=>obj.linkPrecedence.toLowerCase() == 'primary')
         // console.log("primary objects", primaryObjects)

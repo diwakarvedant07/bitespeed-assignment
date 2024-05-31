@@ -2,10 +2,10 @@
   "name": "supabase",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "scripts": {
-    "build": "npx tsc & nodemon dist/server.js",
-    "start": "node dist/server.js",
+    "build": "npx tsc & nodemon dist/src/server.js",
+    "start": "node dist/src/server.js",
     "dev": "nodemon src/server.ts",
     "devStart": "nodemon src/server.js"
   },
