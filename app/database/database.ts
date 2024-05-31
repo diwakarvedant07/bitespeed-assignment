@@ -73,7 +73,7 @@ export function updateContact(
     return new Promise((resolve, reject) => {
         db.run(
             'UPDATE Contact SET phoneNumber = ?, email = ?, linkedId = ?, linkPrecedence = ?, updatedAt = ?, deletedAt = ? WHERE id = ?',
-            [phoneNumber, email, linkedId, linkPrecedence, new Date(updatedAt).toISOString(), deletedAt ? deletedAt.toISOString() : null, id],
+            [phoneNumber, email, linkedId, linkPrecedence, new Date().toISOString(), deletedAt ? deletedAt.toISOString() : null, id],
             function (err) {
                 if (err) {
                     console.error('Error updating contact:', err);
