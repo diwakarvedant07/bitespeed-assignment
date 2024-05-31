@@ -2,4 +2,6 @@ delete database.db file to get a new empty database
 
 npm i to install dependencies
 
-npm run dev to start the server
+npx tsc to transpile
+
+or simply run npm run build to transpile and start server
